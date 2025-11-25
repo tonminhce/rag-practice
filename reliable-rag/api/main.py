@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-from rag_core.pipeline.pipeline import ReliableRAGPipeline
+from rag_core import ReliableRAGPipeline
 
 app = FastAPI(title="Reliable RAG API")
 pipeline = ReliableRAGPipeline()

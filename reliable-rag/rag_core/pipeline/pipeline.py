@@ -39,6 +39,8 @@ class ReliableRAGPipeline:
 
     def setup(self) -> None:
         """Build the retriever, vector store, and LLM chains."""
+        if self.retriever is not None:
+            return
         self.logger.info("Building retriever and vector store...")
         self.retriever = build_retriever(
             data_config=self.config.data,
@@ -95,13 +97,14 @@ class ReliableRAGPipeline:
 
     def _filter_docs(self, question: str, docs: List[Document]) -> List[Document]:
         """Filter retrieved documents using the relevance grader."""
-        selected: List[Document] = []
-        for doc in docs:
-            result = self.retrieval_grader.invoke(
+        selected = [
+            doc
+            for doc in docs
+            if self.retrieval_grader.invoke(
                 {"question": question, "document": doc.page_content}
-            )
-            if result.binary_score.lower() == "yes":
-                selected.append(doc)
+            ).binary_score.lower()
+            == "yes"
+        ]
         return selected or docs
 
 
