@@ -242,6 +242,7 @@ def read_pdf_to_string(path):
         page = doc[page_num]
         # Extract the text content from the current page and append it to the content string
         content += page.get_text()
+    print(content)
     return content
 
 

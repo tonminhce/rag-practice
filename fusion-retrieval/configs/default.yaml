@@ -1,0 +1,19 @@
+embedding:
+  model: text-embedding-3-small
+  dimensions: 512
+
+llm:
+  model: gpt-4o-mini
+  temperature: 0.1
+
+retriever:
+  vector_weight: 0.6
+  bm25_weight: 0.4
+  similarity_top_k: 2
+  num_queries: 1
+  mode: dist_based_score  # Options: reciprocal_rerank, relative_score, dist_based_score, simple
+
+data:
+  chunk_size: 1000
+  chunk_overlap: 200
+
